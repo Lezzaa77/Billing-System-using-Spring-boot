@@ -165,3 +165,16 @@ To start again from nothing: stop the app, run `DROP DATABASE billing_spring;` i
   templates were tested separately. If anything fails on your machine, copy the red error from the terminal and
   send it - it is normally a one-line fix.
 - Passwords are stored as BCrypt hashes; forms are protected with CSRF tokens; all SQL uses parameters.
+
+
+---
+----
+-- Task	What to do --
+Start database	- Start MySQL in XAMPP
+Start project	- mvn spring-boot:run
+Open website -	http://localhost:8080
+Stop project -	Ctrl + C
+Stop database -	Stop MySQL in XAMPP
+
+
+Important: You only need to run git push when you make changes and want to upload those changes to GitHub. You don't need GitHub to run your project locally.
