@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Shared page pieces: <head> and the top bar. Other pages pull these in with th:replace. -->
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} + ' - Billing System'">Billing System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav th:fragment="navbar" class="topbar no-print">
+    <strong>Billing System</strong>
+    <span th:if="${currentUserName != null}">
+        <a th:href="@{/home}">Home</a>
+        <a th:href="@{/items/add}">Add Item</a>
+        <a th:href="@{/sell}">Sell</a>
+        <a th:href="@{/report}">Report</a>
+        <form th:action="@{/logout}" method="post" class="inline">
+            <button type="submit" class="linkbtn">Logout (<span th:text="${currentUserName}">user</span>)</button>
+        </form>
+    </span>
+</nav>
+</body>
+</html>

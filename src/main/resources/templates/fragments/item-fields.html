@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- The input boxes shared by the Add Item and Update Item pages. Must be used inside a form with th:object. -->
+<body>
+<div th:fragment="fields">
+    <label for="itemCode">Item ID / Code *</label>
+    <input type="text" id="itemCode" th:field="*{itemCode}" maxlength="30">
+    <div class="field-error" th:if="${#fields.hasErrors('itemCode')}" th:errors="*{itemCode}">error</div>
+
+    <label for="name">Item Name *</label>
+    <input type="text" id="name" th:field="*{name}" maxlength="120">
+    <div class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">error</div>
+
+    <label for="category">Category (pick an existing one or type a new one)</label>
+    <input type="text" id="category" th:field="*{category}" list="categoryList" maxlength="60">
+    <datalist id="categoryList">
+        <option th:each="c : ${categories}" th:value="${c}"></option>
+    </datalist>
+    <div class="field-error" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">error</div>
+
+    <label for="quantity">Quantity *</label>
+    <input type="number" id="quantity" th:field="*{quantity}" min="0" step="1">
+    <div class="field-error" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">error</div>
+
+    <label for="unitPrice">Unit Price *</label>
+    <input type="number" id="unitPrice" th:field="*{unitPrice}" min="0" step="0.01">
+    <div class="field-error" th:if="${#fields.hasErrors('unitPrice')}" th:errors="*{unitPrice}">error</div>
+
+    <label for="description">Description</label>
+    <textarea id="description" th:field="*{description}" rows="3" maxlength="255"></textarea>
+    <div class="field-error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">error</div>
+</div>
+</body>
+</html>

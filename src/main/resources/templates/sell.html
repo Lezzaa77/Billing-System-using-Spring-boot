@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Sell Item')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div class="container">
+    <h2>Sell Item</h2>
+
+    <div class="success" th:if="${message}" th:text="${message}">Done.</div>
+
+    <div th:if="${#lists.isEmpty(items)}">
+        <p>No items are in stock. <a th:href="@{/items/add}">Add an item</a> first.</p>
+        <a class="btn btn-gray" th:href="@{/home}">Back to Home</a>
+    </div>
+
+    <form th:unless="${#lists.isEmpty(items)}" th:action="@{/sell}" th:object="${form}" method="post">
+        <div class="error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">error</div>
+
+        <label for="itemId">Item *</label>
+        <select id="itemId" th:field="*{itemId}">
+            <option th:each="it : ${items}" th:value="${it.id}"
+                    th:text="|${it.itemCode} - ${it.name} (stock: ${it.quantity}, price: ${#numbers.formatDecimal(it.unitPrice, 1, 'COMMA', 2, 'POINT')})|">Item</option>
+        </select>
+        <div class="field-error" th:if="${#fields.hasErrors('itemId')}" th:errors="*{itemId}">error</div>
+
+        <label for="quantity">Quantity *</label>
+        <input type="number" id="quantity" th:field="*{quantity}" min="1" step="1">
+        <div class="field-error" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">error</div>
+
+        <label for="customer">Customer name (optional)</label>
+        <input type="text" id="customer" th:field="*{customer}" maxlength="100">
+        <div class="field-error" th:if="${#fields.hasErrors('customer')}" th:errors="*{customer}">error</div>
+
+        <button type="submit">Record Sale</button>
+        <a class="btn btn-gray" th:href="@{/home}">Back to Home</a>
+    </form>
+
+    <h3>Recent Sales</h3>
+    <table>
+        <tr>
+            <th>Date</th><th>Item</th><th class="num">Qty</th>
+            <th class="num">Price</th><th class="num">Total</th><th>Customer</th>
+        </tr>
+        <tr th:if="${#lists.isEmpty(recentSales)}"><td colspan="6">No sales yet.</td></tr>
+        <tr th:each="s : ${recentSales}">
+            <td th:text="${#temporals.format(s.soldAt, 'dd MMM yyyy HH:mm')}">date</td>
+            <td th:text="${s.itemCode} + ' - ' + ${s.itemName}">item</td>
+            <td class="num" th:text="${s.quantity}">0</td>
+            <td class="num" th:text="${#numbers.formatDecimal(s.unitPrice, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+            <td class="num" th:text="${#numbers.formatDecimal(s.total, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+            <td th:text="${s.customerName}">customer</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

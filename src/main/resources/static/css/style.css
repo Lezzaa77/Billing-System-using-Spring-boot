@@ -1,0 +1,39 @@
+body { font-family: Arial, Helvetica, sans-serif; margin: 0; background: #f4f4f4; color: #222; }
+.topbar { background: #2c3e50; color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+.topbar a { color: #fff; margin-left: 15px; text-decoration: none; }
+.topbar a:hover { text-decoration: underline; }
+.topbar form.inline { display: inline; margin: 0; }
+.linkbtn { background: none; border: none; color: #fff; margin: 0 0 0 15px; padding: 0; cursor: pointer; font-size: 16px; font-family: inherit; }
+.linkbtn:hover { text-decoration: underline; }
+.container { max-width: 950px; margin: 25px auto; background: #fff; padding: 25px; border: 1px solid #ddd; }
+h1, h2 { margin-top: 0; }
+h3 { margin: 25px 0 5px; }
+label { display: block; margin-top: 12px; font-weight: bold; }
+input[type=text], input[type=email], input[type=password], input[type=number], input[type=date], select, textarea {
+    width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; border: 1px solid #aaa; font-size: 14px;
+}
+button, .btn { display: inline-block; margin-top: 15px; padding: 8px 16px; background: #2c3e50; color: #fff;
+    border: none; cursor: pointer; text-decoration: none; font-size: 14px; }
+.btn-danger { background: #c0392b; }
+.btn-gray { background: #7f8c8d; }
+table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+th, td { border: 1px solid #bbb; padding: 7px; text-align: left; }
+th { background: #ecf0f1; }
+td.num, th.num { text-align: right; }
+tr.subtotal td { background: #f9f9f9; font-weight: bold; }
+.error { background: #fdecea; border: 1px solid #c0392b; padding: 8px 10px; margin: 6px 0; }
+.field-error { color: #c0392b; font-size: 13px; margin-top: 3px; }
+.success { background: #eafaf1; border: 1px solid #27ae60; padding: 10px; margin-bottom: 10px; }
+.menu { margin: 15px 0; }
+.menu .btn { margin-top: 0; margin-right: 6px; }
+.small { font-size: 13px; color: #555; }
+.filter { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+.filter label { margin-top: 0; }
+.filter input { width: auto; }
+.filter button, .filter .btn { margin-top: 0; }
+
+@media print {
+    .no-print { display: none !important; }
+    body { background: #fff; }
+    .container { border: none; margin: 0; max-width: 100%; padding: 0; }
+}

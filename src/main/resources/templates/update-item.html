@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Update Item')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div class="container">
+    <h2>Update Item</h2>
+
+    <form th:action="@{/items/{id}/edit(id=${itemId})}" th:object="${form}" method="post">
+        <div th:replace="~{fragments/item-fields :: fields}"></div>
+        <button type="submit">Update Item</button>
+        <a class="btn btn-gray" th:href="@{/home}">Back to Home</a>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Home')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div class="container">
+    <h2>Welcome, <span th:text="${currentUserName}">User</span></h2>
+
+    <div class="success" th:if="${message}" th:text="${message}">Done.</div>
+    <div class="error" th:if="${error}" th:text="${error}">Problem.</div>
+
+    <p>
+        Items: <strong th:text="${totalItems}">0</strong> |
+        Total quantity: <strong th:text="${totalQty}">0</strong> |
+        Stock value: <strong th:text="${#numbers.formatDecimal(totalValue, 1, 'COMMA', 2, 'POINT')}">0.00</strong>
+    </p>
+
+    <div class="menu">
+        <a class="btn" th:href="@{/items/add}">Add Item</a>
+        <a class="btn" th:href="@{/sell}">Sell Item</a>
+        <a class="btn" th:href="@{/report}">Sales Report</a>
+    </div>
+
+    <h2>All Items by Category</h2>
+    <p th:if="${#lists.isEmpty(groups)}">No items yet. Click "Add Item" to create one.</p>
+
+    <div th:each="g : ${groups}">
+        <h3>
+            <span th:text="${g.name}">Category</span>
+            <span class="small" th:text="'(' + ${#lists.size(g.items)} + ' items)'">(0 items)</span>
+        </h3>
+        <table>
+            <tr>
+                <th>Item ID</th><th>Name</th><th class="num">Qty</th>
+                <th class="num">Unit Price</th><th class="num">Stock Value</th><th>Actions</th>
+            </tr>
+            <tr th:each="it : ${g.items}">
+                <td th:text="${it.itemCode}">ITM001</td>
+                <td th:text="${it.name}">Name</td>
+                <td class="num" th:text="${it.quantity}">0</td>
+                <td class="num" th:text="${#numbers.formatDecimal(it.unitPrice, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+                <td class="num" th:text="${#numbers.formatDecimal(it.stockValue, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+                <td>
+                    <a th:href="@{/items/{id}/edit(id=${it.id})}">Update</a> |
+                    <a th:href="@{/items/{id}/delete(id=${it.id})}">Delete</a>
+                </td>
+            </tr>
+            <tr class="subtotal">
+                <td colspan="2">Category total</td>
+                <td class="num" th:text="${g.totalQuantity}">0</td>
+                <td></td>
+                <td class="num" th:text="${#numbers.formatDecimal(g.totalValue, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

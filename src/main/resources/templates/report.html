@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Sales Report')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div class="container">
+    <h2>Total Sales Report</h2>
+    <p class="small">
+        Period: <span th:text="${period}">All time</span>
+        | Generated on <span th:text="${#temporals.format(generatedAt, 'dd MMM yyyy, HH:mm')}">date</span>
+        by <span th:text="${currentUserName}">user</span>
+    </p>
+
+    <div class="error" th:if="${error}" th:text="${error}">Problem.</div>
+
+    <form th:action="@{/report}" method="get" class="filter no-print">
+        <div>
+            <label for="from">From</label>
+            <input type="date" id="from" name="from" th:value="${fromText}">
+        </div>
+        <div>
+            <label for="to">To</label>
+            <input type="date" id="to" name="to" th:value="${toText}">
+        </div>
+        <button type="submit">Show</button>
+        <a class="btn btn-gray" th:href="@{/report}">All time</a>
+    </form>
+
+    <p class="no-print">
+        <button type="button" onclick="window.print()">Print</button>
+        <a class="btn" th:href="@{/report/pdf(from=${fromText},to=${toText})}">Download PDF</a>
+        <a class="btn btn-gray" th:href="@{/home}">Back to Home</a>
+    </p>
+
+    <h3>Summary</h3>
+    <table>
+        <tr><th>Total sales (revenue)</th><td class="num"><strong th:text="${#numbers.formatDecimal(report.totalSales, 1, 'COMMA', 2, 'POINT')}">0.00</strong></td></tr>
+        <tr><th>Number of sales</th><td class="num" th:text="${report.saleCount}">0</td></tr>
+        <tr><th>Total units sold</th><td class="num" th:text="${report.unitsSold}">0</td></tr>
+        <tr><th>Average sale value</th><td class="num" th:text="${#numbers.formatDecimal(report.averageSale, 1, 'COMMA', 2, 'POINT')}">0.00</td></tr>
+    </table>
+
+    <h3>Sales by Category</h3>
+    <table>
+        <tr><th>Category</th><th class="num">Sales</th><th class="num">Units</th><th class="num">Revenue</th></tr>
+        <tr th:if="${#lists.isEmpty(report.byCategory)}"><td colspan="4">No sales in this period.</td></tr>
+        <tr th:each="row : ${report.byCategory}">
+            <td th:text="${row.category}">Category</td>
+            <td class="num" th:text="${row.sales}">0</td>
+            <td class="num" th:text="${row.units}">0</td>
+            <td class="num" th:text="${#numbers.formatDecimal(row.revenue, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+        </tr>
+    </table>
+
+    <h3>Top Selling Items</h3>
+    <table>
+        <tr><th>Item ID</th><th>Name</th><th class="num">Units</th><th class="num">Revenue</th></tr>
+        <tr th:if="${#lists.isEmpty(report.topItems)}"><td colspan="4">No sales in this period.</td></tr>
+        <tr th:each="row : ${report.topItems}">
+            <td th:text="${row.itemCode}">ITM001</td>
+            <td th:text="${row.itemName}">Name</td>
+            <td class="num" th:text="${row.units}">0</td>
+            <td class="num" th:text="${#numbers.formatDecimal(row.revenue, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+        </tr>
+    </table>
+
+    <h3>Sales by Day</h3>
+    <table>
+        <tr><th>Date</th><th class="num">Sales</th><th class="num">Units</th><th class="num">Revenue</th></tr>
+        <tr th:if="${#lists.isEmpty(report.byDay)}"><td colspan="4">No sales in this period.</td></tr>
+        <tr th:each="row : ${report.byDay}">
+            <td th:text="${#temporals.format(row.day, 'dd MMM yyyy')}">date</td>
+            <td class="num" th:text="${row.sales}">0</td>
+            <td class="num" th:text="${row.units}">0</td>
+            <td class="num" th:text="${#numbers.formatDecimal(row.revenue, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
