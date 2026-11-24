@@ -169,7 +169,7 @@ To start again from nothing: stop the app, run `DROP DATABASE billing_spring;` i
 
 ---
 ----
-##-- Task	What to do --
+## -- Task	What to do --
 - Start database	- Start MySQL in XAMPP
 - Start project	- mvn spring-boot:run
 - Open website -	http://localhost:8080
